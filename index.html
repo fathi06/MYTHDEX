@@ -615,6 +615,8 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
+      <!-- Tambah di bahagian atas dalam <section class="hero"> -->
+<canvas id="particleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></canvas>
       <span class="badge-fan"><i class="fa-solid fa-triangle-exclamation"></i> UNOFFICIAL FANS PROJECT</span>
       <h1>MYTHDEX : KAMEN RIDER <span> MY-TH ARCHIVE</span></h1>
       <p>TRACK YOUR KAMEN RIDER MY-TH COLLECTION AND ENJOY INTERACTIVE MEDIA OF EVERY ITEM IN KAMEN RIDER MY-TH SERIES IN JUST ONE APPS</p>
@@ -717,6 +719,27 @@
       </div>
     </section>
 
+    <section class="description-section">
+  <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+  <div style="display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto;">
+    
+    <details style="background: var(--bg-card); border: 1px solid var(--border-gold); padding: 15px; cursor: pointer;">
+      <summary style="color: var(--accent-gold); font-weight: bold;">Adakah aplikasi ini memerlukan sambungan internet?</summary>
+      <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-washi);">
+        Pengkalan data utama dan penandaan koleksi boleh digunakan secara luar talian (offline). Walau bagaimanapun, fungsi *Cloud Sync* dan galeri media memerlukan sambungan internet.
+      </p>
+    </details>
+
+    <details style="background: var(--bg-card); border: 1px solid var(--border-gold); padding: 15px; cursor: pointer;">
+      <summary style="color: var(--accent-gold); font-weight: bold;">Bagaimana cara memasang fail .APK pada Android?</summary>
+      <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-washi);">
+        Muat turun fail .APK, buka fail tersebut pada telefon anda, dan benarkan kebenaran "Install from Unknown Sources" dalam tetapan peranti anda.
+      </p>
+    </details>
+
+  </div>
+</section>
+
     <!-- DOWNLOAD SECTION -->
     <section id="download" class="download-section">
       <h2 class="section-title">DOWNLOAD CENTRE</h2>
@@ -817,6 +840,40 @@
         closeLightbox();
       }
     });
+    // Kod JS untuk animasi zarah
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = canvas.parentElement.clientHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const particles = Array.from({ length: 35 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  size: Math.random() * 2 + 1,
+  speedY: Math.random() * -0.8 - 0.2,
+  opacity: Math.random() * 0.7 + 0.3
+}));
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.y += p.speedY;
+    if (p.y < 0) p.y = canvas.height;
+    ctx.fillStyle = `rgba(207, 181, 59, ${p.opacity})`; // Warna --accent-gold
+    ctx.shadowBlur = 6;
+    ctx.shadowColor = '#CFB53B';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
   </script>
 
 </body>
